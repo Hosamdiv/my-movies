@@ -1,5 +1,8 @@
 import axios from "axios";
 
 export const axiosApi = axios.create({
-  baseURL: "http://localhost:1337/api",
+  baseURL: "https://api.themoviedb.org/3",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
