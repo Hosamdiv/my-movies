@@ -12,7 +12,7 @@ const HeaderPage = () => {
       "
         >
           <div className="absolute top-0 left-10 z-0 flex items-center justify-between w-[90%]">
-            <Image src="/public/pngwing.com.png" w={140} alt="my-netflix" />
+            <Image src="/pngwing.com.png" w={140} alt="my-netflix" />
             <Button className="button-media bg-[#e50914] text-white font-semibold">
               Sign in
             </Button>
