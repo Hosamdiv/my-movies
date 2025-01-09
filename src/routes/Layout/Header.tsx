@@ -8,12 +8,12 @@ const HeaderPage = () => {
       <nav>
         <div
           className="div-img min-h-[80vh] flex justify-center items-center
-         relative flex-col
+        relative flex-col
       "
         >
           <div className="absolute top-0 left-10 z-0 flex items-center justify-between w-[90%]">
             <Image src="/pngwing.com.png" w={140} alt="my-netflix" />
-            <Button className="button-media bg-[#e50914] text-white font-semibold">
+            <Button  className="button-media px-5 bg-[#e50914] text-white font-semibold">
               Sign in
             </Button>
           </div>
@@ -24,14 +24,14 @@ const HeaderPage = () => {
             <h2 className="text-xl font-bold">
               Starts at EGP 70. Cancel anytime.
             </h2>
-            <p className=" font-bold">
+            <p className="font-bold">
               Ready to watch? Enter your email to create or restart your
               membership.
             </p>
           </div>
           <div className="div_inp_but flex justify-center items-center space-x-2 my-5 w-full ">
             <Input
-              className="inp py-6 w-[50%] min-h-[16px] min-w-[16px] bg-blur-md border-2 border-[#e50914]
+              className="inp py-6 px-3 w-[50%] min-h-[16px] min-w-[16px] bg-blur-md border-2 border-[#e50914]
             text-[18px]
             "
               type="text"
