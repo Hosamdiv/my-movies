@@ -1,14 +1,11 @@
-import MovieDetails from "../components/components/Movies";
+import MoviesPage from "../components/components/Movies";
 import useAuthenticatedQuey from "../hooks/useAuthenticatedQuery";
 import { IMovie } from "../interface";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import { useParams } from "react-router-dom";
 
 const ProductsPage = () => {
-  // const { id } = useParams();
-
   const { data, isLoading } = useAuthenticatedQuey({
     queryKey: ["movie"],
     url: `/movie/popular?page=1`,
@@ -50,11 +47,6 @@ const ProductsPage = () => {
     ],
   };
 
-  // const handlePageChange = (newPage: number) => {
-  //   navigate(`/products/${newPage}`);
-  //   setCurrentPage(newPage);
-  // };
-
   if (isLoading) return <h2>Loading...</h2>;
 
   return (
@@ -64,7 +56,7 @@ const ProductsPage = () => {
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
             {data.results.map((movie: IMovie) => (
-              <MovieDetails key={movie.id} product={movie} />
+              <MoviesPage key={movie.id} product={movie} />
             ))}
           </Slider>
         </div>

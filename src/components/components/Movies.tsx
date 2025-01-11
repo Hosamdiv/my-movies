@@ -6,7 +6,7 @@ interface IProps {
   product: IMovie;
 }
 
-const MovieDetails = ({ product }: IProps) => {
+const MoviesPage = ({ product }: IProps) => {
   const { id, release_date, title, vote_average, poster_path } = product;
 
   return (
@@ -38,4 +38,4 @@ const MovieDetails = ({ product }: IProps) => {
   );
 };
 
-export default MovieDetails;
+export default MoviesPage;
