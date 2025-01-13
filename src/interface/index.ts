@@ -5,3 +5,16 @@ export interface IMovie {
   release_date: string;
   vote_average: number;
 }
+
+export interface IActors {
+  id?: number;
+  name: string;
+  backdrop_path:string;
+  
+}
+
+export interface ICastData {
+  id: number;
+  profile_path: string;
+  name: string;
+}

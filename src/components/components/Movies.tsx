@@ -27,6 +27,7 @@ const MoviesPage = ({ product }: IProps) => {
           {title.length > 15 ? `${title.slice(0, 15)}...` : title}
         </h3>
       </div>
+      
       <div className="flex items-center justify-around">
         <h2 className="flex items-center gap-1">
           <span className="text-yellow-500 text-xl">★</span>
