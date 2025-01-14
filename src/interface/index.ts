@@ -9,12 +9,12 @@ export interface IMovie {
 export interface IActors {
   id?: number;
   name: string;
-  backdrop_path:string;
-  
+  backdrop_path: string;
 }
 
 export interface ICastData {
   id: number;
-  profile_path: string;
+  profile_path?: string;
+  poster_path?: string;
   name: string;
 }

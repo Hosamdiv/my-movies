@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ActorsDetails from "../components/components/ActorsDetails";
 import Slider from "react-slick";
 import { ICastData } from "../interface";
+import { useEffect } from "react";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -15,11 +16,19 @@ const MovieDetails = () => {
     queryKey: ["movieDetails", `${id}`],
     url: `/movie/${id}`,
   });
-  console.log(data);
   const { data: castData } = useAuthenticatedQuey({
     queryKey: ["movieCast", `${id}`],
-    url: `/movie/${id}/credits`, // الحصول على تفاصيل الممثلين في الفيلم
+    url: `/movie/${id}/credits`,
   });
+  const { data: videosData } = useAuthenticatedQuey({
+    queryKey: ["movieCast", `${id}`],
+    url: `/movie/${id}/videos`,
+  });
+
+  useEffect(() => {
+    console.log("Videos Data:", videosData?.results);
+  }, [videosData]);
+
   if (isMovieLoading) return <div>Loading...</div>;
   const settings = {
     dots: false,
@@ -70,7 +79,7 @@ const MovieDetails = () => {
        via-[rgba(25,0,0,0.3)] to-black"
         ></div>
         <div className="details-media flex pt-36 pl-20 space-x-4 w-[90%] ">
-          <div className="w-full m-auto">
+          <div className="w-full text-center m-auto ">
             <Image
               w={250}
               h={350}
@@ -80,7 +89,10 @@ const MovieDetails = () => {
               loading="lazy"
             />
             <Button
-              className="w-full m-auto bg-red-700
+              maxW={250}
+              w={250}
+              m={"auto"}
+              className="  bg-red-700
           hover:bg-red-600 transition duration-300 ease-in-out
           "
             >
@@ -95,47 +107,79 @@ const MovieDetails = () => {
               </span>
             </h1>
             <p className="text-xl">{data.overview}</p>
-            <div>
-              {data.genres.map((item: { id: number; name: string }) => (
-                <span
-                  key={item.id}
-                  className="px-3 py-2 mr-2 rounded-md bg-red-700"
-                >
-                  {item.name}
-                </span>
-              ))}
-            </div>
-            <div className="flex justify-between items-center py-5 md:flex">
-              <div className="flex flex-col space-y-2">
-                <h2 className="text-2xl">Vote_average</h2>
-                <div className="m-auto ">
-                  <span className="border-4 border-red-700 rounded-full p-1">
-                    {data.vote_average.toFixed(1)}
+            <div className="display_remove">
+              <div>
+                {data.genres.map((item: { id: number; name: string }) => (
+                  <span
+                    key={item.id}
+                    className="px-3 py-2 mr-2 rounded-md bg-red-700"
+                  >
+                    {item.name}
                   </span>
+                ))}
+              </div>
+              <div className="flex justify-between items-center py-5 md:flex">
+                <div className="flex flex-col space-y-2">
+                  <h2 className="text-2xl">Vote_average</h2>
+                  <div className="m-auto ">
+                    <span className="border-4 border-red-700 rounded-full p-1">
+                      {data.vote_average.toFixed(1)}
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex flex-col space-y-2">
-                <h2 className="text-2xl">Popularity</h2>
-                <h2 className="m-auto">{data.popularity}</h2>
-              </div>
+                <div className="flex flex-col space-y-2">
+                  <h2 className="text-2xl">Popularity</h2>
+                  <h2 className="m-auto">{data.popularity}</h2>
+                </div>
 
-              <div className="flex flex-col space-y-2">
-                <h2 className="text-2xl">Vote Count</h2>
-                <h2 className="m-auto">{data.vote_count}</h2>
+                <div className="flex flex-col space-y-2">
+                  <h2 className="text-2xl">Vote Count</h2>
+                  <h2 className="m-auto">{data.vote_count}</h2>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="space-y-4 bg-black  pb-52">
-        <h1 className="ml-10">Actors:</h1>
+      {/* slider credits movie */}
+      <div className="cast_media space-y-4 bg-black pt-28 pb-52">
+        <h1 className="ml-10 text-2xl">Movie Crew : -</h1>
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
-            {castData?.cast.map((ele: ICastData) => (
-              <ActorsDetails castData={ele} />
+            {castData?.cast.map((cast: ICastData) => (
+              <ActorsDetails key={cast.id} castData={cast} />
             ))}
           </Slider>
+        </div>
+      </div>
+
+      {/* Display first 2 videos */}
+      <div>
+        <h2 className="text-white">Videos:</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {videosData?.results?.map(
+            (video: {
+              name: string;
+              id: number;
+              site: string;
+              key: string;
+            }) => (
+              <div key={video.id} className="video-item">
+                <h3 className="text-white">{video.name}</h3>
+                {video.site === "YouTube" && (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.key}`}
+                    title={video.name}
+                    width="100%"
+                    height="315"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                )}
+              </div>
+            )
+          )}
         </div>
       </div>
     </>
