@@ -136,7 +136,6 @@
 
 @media (max-width: 768px) {
   .details-media {
-    display: flex;
     flex-direction: column;
   }
 

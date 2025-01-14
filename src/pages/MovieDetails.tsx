@@ -74,11 +74,12 @@ const MovieDetails = () => {
         }}
       >
         <div
-          className="absolute top-0 left-0 w-full h-full
+          className="absolute  top-0 left-0 w-full h-full
        bg-gradient-to-b from-[rgba(3,0,0,0.2)]
        via-[rgba(25,0,0,0.3)] to-black"
         ></div>
-        <div className="details-media flex pt-36 pl-20 space-x-4 w-[90%] ">
+
+        <div className="details-media m-auto flex pt-28  space-x-4 w-[90%] ">
           <div className="w-full text-center m-auto ">
             <Image
               w={250}
