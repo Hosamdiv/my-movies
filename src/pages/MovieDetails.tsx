@@ -6,7 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ActorsDetails from "../components/components/ActorsDetails";
 import Slider from "react-slick";
-import { ICastData } from "../interface";
+import { ICastData, IMovie } from "../interface";
+import MoviesPage from "../components/components/Movies";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -195,8 +196,8 @@ const MovieDetails = () => {
       <div className="cast_media space-y-4 bg-black pt-28 pb-52">
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
-            {recommendations?.results.map((cast: ICastData) => (
-              <ActorsDetails key={cast.id} castData={cast} />
+            {recommendations?.results.map((cast: IMovie) => (
+              <MoviesPage key={cast.id} product={cast} />
             ))}
           </Slider>
         </div>
