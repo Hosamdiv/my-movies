@@ -7,7 +7,6 @@ import "slick-carousel/slick/slick-theme.css";
 import ActorsDetails from "../components/components/ActorsDetails";
 import Slider from "react-slick";
 import { ICastData } from "../interface";
-import { useEffect } from "react";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -20,14 +19,17 @@ const MovieDetails = () => {
     queryKey: ["movieCast", `${id}`],
     url: `/movie/${id}/credits`,
   });
+
   const { data: videosData } = useAuthenticatedQuey({
-    queryKey: ["movieCast", `${id}`],
+    queryKey: ["movieVideos", `${id}`],
     url: `/movie/${id}/videos`,
   });
+  const { data: recommendations } = useAuthenticatedQuey({
+    queryKey: ["movieRecommendations", `${id}`],
+    url: `/movie/${id}/recommendations`,
+  });
 
-  useEffect(() => {
-    console.log("Videos Data:", videosData?.results);
-  }, [videosData]);
+  console.log(recommendations);
 
   if (isMovieLoading) return <div>Loading...</div>;
   const settings = {
@@ -64,11 +66,12 @@ const MovieDetails = () => {
       },
     ],
   };
-
+  const videos = videosData.results.slice(0, 2);
   return (
     <>
+      {/* header details */}
       <div
-        className=" relative bg-cover bg-center max-w-full h-screen bg-fixed z-[999]"
+        className="relative bg-cover bg-center max-w-full h-screen bg-fixed z-[999]"
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/original${data.backdrop_path})`,
         }}
@@ -80,7 +83,7 @@ const MovieDetails = () => {
         ></div>
 
         <div className="details-media m-auto flex pt-28  space-x-4 w-[90%] ">
-          <div className="w-full text-center m-auto ">
+          <div className="image-button w-full text-center m-auto ">
             <Image
               w={250}
               h={350}
@@ -100,7 +103,7 @@ const MovieDetails = () => {
               Watch the movie at TMDB
             </Button>
           </div>
-          <div className="text-white font-semibold z-50 space-y-3">
+          <div className=" text-white font-semibold z-50 space-y-3">
             <h1 className="text-3xl">
               {data.original_title} {data.original_name}
               <span className="font-bold text-red-700">
@@ -145,7 +148,7 @@ const MovieDetails = () => {
       </div>
       {/* slider credits movie */}
       <div className="cast_media space-y-4 bg-black pt-28 pb-52">
-        <h1 className="ml-10 text-2xl">Movie Crew : -</h1>
+        <h1 className="texts ml-10 text-2xl">Movie Crew : -</h1>
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
             {castData?.cast.map((cast: ICastData) => (
@@ -156,10 +159,12 @@ const MovieDetails = () => {
       </div>
 
       {/* Display first 2 videos */}
-      <div>
-        <h2 className="text-white">Videos:</h2>
+      <div className="bg-black ">
+        <h2 className="texts text-white mb-5 ml-10 text-2xl">
+          Trailers and Videos : -
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {videosData?.results?.map(
+          {videos?.map(
             (video: {
               name: string;
               id: number;
@@ -167,7 +172,9 @@ const MovieDetails = () => {
               key: string;
             }) => (
               <div key={video.id} className="video-item">
-                <h3 className="text-white">{video.name}</h3>
+                <h3 className="text-white mb-3 text-center text-xl font-semibold">
+                  {video.name}
+                </h3>
                 {video.site === "YouTube" && (
                   <iframe
                     src={`https://www.youtube.com/embed/${video.key}`}
@@ -181,6 +188,17 @@ const MovieDetails = () => {
               </div>
             )
           )}
+        </div>
+      </div>
+
+      {/* slider credits recommendations */}
+      <div className="cast_media space-y-4 bg-black pt-28 pb-52">
+        <div className="slider-container w-[95%] m-auto">
+          <Slider {...settings}>
+            {recommendations?.results.map((cast: ICastData) => (
+              <ActorsDetails key={cast.id} castData={cast} />
+            ))}
+          </Slider>
         </div>
       </div>
     </>

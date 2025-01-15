@@ -145,4 +145,12 @@
   .cast_media{
     padding-top: 220px;
   }
+  .image-button{
+    padding-bottom: 15px;
+  }
+  .texts{
+    text-align: center;
+    margin: auto;
+    padding: 10px 0;
+  }
 }
