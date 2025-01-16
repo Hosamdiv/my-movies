@@ -1,16 +1,17 @@
 import { Image } from "@chakra-ui/react";
 import { ICastData } from "../../interface";
+import { Link } from "react-router-dom";
 
 interface IProps {
   castData: ICastData;
 }
-const ActorsDetails = ({ castData }: IProps) => {
+const ActorsSlider = ({ castData }: IProps) => {
   // console.log(castData);
 
   return (
     <div className="px-3 py-4">
       <div className="">
-        {castData.profile_path ? (
+        <Link to={`/actor/${castData.id}`}>
           <Image
             width={200}
             height={250}
@@ -18,15 +19,7 @@ const ActorsDetails = ({ castData }: IProps) => {
             alt={castData.name}
             className="w-full m-auto rounded-lg hover:scale-105 hover:rotate-6 transition-transform duration-300"
           />
-        ) : (
-          <Image
-            width={200}
-            height={250}
-            src={`https://image.tmdb.org/t/p/w500${castData.poster_path}`}
-            alt={castData.name}
-            className="w-full m-auto rounded-lg hover:scale-105 hover:rotate-6 transition-transform duration-300"
-          />
-        )}
+        </Link>
       </div>
       <div>
         <h3 className="text-white text-center mt-2 ">{castData.name}</h3>
@@ -35,4 +28,4 @@ const ActorsDetails = ({ castData }: IProps) => {
   );
 };
 
-export default ActorsDetails;
+export default ActorsSlider;

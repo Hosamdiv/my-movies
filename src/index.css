@@ -9,7 +9,7 @@
   margin: 0;
   padding: 0;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: black;
   box-sizing: border-box;
 
   font-synthesis: none;
@@ -159,6 +159,17 @@
 
   .videos-media {
     flex-direction: column;
-
+  }
+  .div_media{
+    text-align: center;
+  }
+  .actor_media{
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .description_media{
+    width: 100%;
+    margin-top: 10px;
   }
 }

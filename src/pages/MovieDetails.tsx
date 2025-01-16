@@ -4,10 +4,10 @@ import { Image } from "@chakra-ui/react";
 import { Button } from "../components/ui/button";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ActorsDetails from "../components/components/ActorsDetails";
+import ActorsSlider from "../components/components/ActorsSlider";
 import Slider from "react-slick";
 import { ICastData, IMovie } from "../interface";
-import MoviesPage from "../components/components/MovieSlider";
+import MovieSlider from "../components/components/MovieSlider";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -16,6 +16,8 @@ const MovieDetails = () => {
     queryKey: ["movieDetails", `${id}`],
     url: `/movie/${id}`,
   });
+  console.log(data?.id);
+  
   const { data: castData } = useAuthenticatedQuey({
     queryKey: ["movieCast", `${id}`],
     url: `/movie/${id}/credits`,
@@ -152,8 +154,8 @@ const MovieDetails = () => {
         <h1 className="texts ml-10 text-2xl">Movie Crew : -</h1>
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
-            {castData?.cast.map((cast: ICastData) => (
-              <ActorsDetails key={cast.id} castData={cast} />
+            {castData?.cast?.map((cast: ICastData) => (
+              <ActorsSlider key={cast.id} castData={cast} />
             ))}
           </Slider>
         </div>
@@ -198,7 +200,7 @@ const MovieDetails = () => {
           <div className="slider-container w-[95%] m-auto">
             <Slider {...settings}>
               {recommendations?.results?.map((cast: IMovie) => (
-                <MoviesPage key={cast.id} product={cast} />
+                <MovieSlider key={cast.id} product={cast} />
               ))}
             </Slider>
           </div>
