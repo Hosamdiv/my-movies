@@ -6,7 +6,7 @@ import {
 import RootLayout from "../pages/Layout";
 import MovieSlider from "../pages/Movies";
 import MovieDetails from "../pages/MovieDetails";
-import ActorsDetails from "../pages/ActoreDetails";
+import ActorsDetails from "../pages/ActorsDetails";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
