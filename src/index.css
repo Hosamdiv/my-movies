@@ -142,15 +142,23 @@
   .display_remove {
     display: none;
   }
-  .cast_media{
-    padding-top: 220px;
+
+  .cast_media {
+    padding-top: 200px;
   }
-  .image-button{
+
+  .image-button {
     padding-bottom: 15px;
   }
-  .texts{
+
+  .texts {
     text-align: center;
     margin: auto;
     padding: 10px 0;
+  }
+
+  .videos-media {
+    flex-direction: column;
+
   }
 }

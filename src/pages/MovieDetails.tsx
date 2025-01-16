@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ActorsDetails from "../components/components/ActorsDetails";
 import Slider from "react-slick";
 import { ICastData, IMovie } from "../interface";
-import MoviesPage from "../components/components/Movies";
+import MoviesPage from "../components/components/MovieSlider";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -25,12 +25,12 @@ const MovieDetails = () => {
     queryKey: ["movieVideos", `${id}`],
     url: `/movie/${id}/videos`,
   });
-  const { data: recommendations } = useAuthenticatedQuey({
-    queryKey: ["movieRecommendations", `${id}`],
-    url: `/movie/${id}/recommendations`,
-  });
 
-  console.log(recommendations);
+  const { data: recommendations, isLoading: loadingRecommendations } =
+    useAuthenticatedQuey({
+      queryKey: ["movieRecommendations", `${id}`],
+      url: `/movie/${id}/recommendations`,
+    });
 
   if (isMovieLoading) return <div>Loading...</div>;
   const settings = {
@@ -67,7 +67,7 @@ const MovieDetails = () => {
       },
     ],
   };
-  const videos = videosData.results.slice(0, 2);
+  const video = videosData?.results;
   return (
     <>
       {/* header details */}
@@ -83,7 +83,7 @@ const MovieDetails = () => {
        via-[rgba(25,0,0,0.3)] to-black"
         ></div>
 
-        <div className="details-media m-auto flex pt-28  space-x-4 w-[90%] ">
+        <div className="details-media m-auto flex pt-10 space-x-4 w-[90%] ">
           <div className="image-button w-full text-center m-auto ">
             <Image
               w={250}
@@ -97,7 +97,7 @@ const MovieDetails = () => {
               maxW={250}
               w={250}
               m={"auto"}
-              className="  bg-red-700
+              className=" bg-red-700
           hover:bg-red-600 transition duration-300 ease-in-out
           "
             >
@@ -148,7 +148,7 @@ const MovieDetails = () => {
         </div>
       </div>
       {/* slider credits movie */}
-      <div className="cast_media space-y-4 bg-black pt-28 pb-52">
+      <div className="cast_media space-y-4 bg-black pt-28 pb-10">
         <h1 className="texts ml-10 text-2xl">Movie Crew : -</h1>
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
@@ -160,48 +160,50 @@ const MovieDetails = () => {
       </div>
 
       {/* Display first 2 videos */}
-      <div className="bg-black ">
+      <div className="bg-black">
         <h2 className="texts text-white mb-5 ml-10 text-2xl">
           Trailers and Videos : -
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {videos?.map(
-            (video: {
-              name: string;
-              id: number;
-              site: string;
-              key: string;
-            }) => (
-              <div key={video.id} className="video-item">
-                <h3 className="text-white mb-3 text-center text-xl font-semibold">
-                  {video.name}
-                </h3>
-                {video.site === "YouTube" && (
-                  <iframe
-                    src={`https://www.youtube.com/embed/${video.key}`}
-                    title={video.name}
-                    width="100%"
-                    height="315"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                )}
-              </div>
-            )
-          )}
-        </div>
+        {video ? (
+          <div className="videos-media flex items-center justify-center space-x-2">
+            <div className="video-item w-full">
+              <iframe
+                src={`https://www.youtube.com/embed/${video[0]?.key}`}
+                title={video.name}
+                width="100%"
+                height="315"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <div className="video-item w-full">
+              <iframe
+                src={`https://www.youtube.com/embed/${video[1]?.key}`}
+                title={video.name}
+                width="100%"
+                height="315"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        ) : null}
       </div>
 
       {/* slider credits recommendations */}
-      <div className="cast_media space-y-4 bg-black pt-28 pb-52">
-        <div className="slider-container w-[95%] m-auto">
-          <Slider {...settings}>
-            {recommendations?.results.map((cast: IMovie) => (
-              <MoviesPage key={cast.id} product={cast} />
-            ))}
-          </Slider>
+      {loadingRecommendations ? (
+        <h2>Loading movies...</h2>
+      ) : (
+        <div className="space-y-4 bg-black pt-10 pb-52">
+          <div className="slider-container w-[95%] m-auto">
+            <Slider {...settings}>
+              {recommendations?.results?.map((cast: IMovie) => (
+                <MoviesPage key={cast.id} product={cast} />
+              ))}
+            </Slider>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import MoviesPage from "../components/components/Movies";
+import MoviesPage from "../components/components/MovieSlider";
 import useAuthenticatedQuey from "../hooks/useAuthenticatedQuery";
 import { IMovie } from "../interface";
 import Slider from "react-slick";
@@ -51,16 +51,20 @@ const ProductsPage = () => {
 
   return (
     <>
-      <div className="father_element space-y-4 bg-black pb-52">
-        <h1 className="ml-10">Movies All :-</h1>
-        <div className="slider-container w-[95%] m-auto">
-          <Slider {...settings}>
-            {data.results.map((movie: IMovie) => (
-              <MoviesPage key={movie.id} product={movie} />
-            ))}
-          </Slider>
+      {isLoading ? (
+        <h2>Loading movies...</h2>
+      ) : (
+        <div className="father_element space-y-4 bg-black pb-52">
+          <h1 className="ml-10 text-2xl">Movies All :-</h1>
+          <div className="slider-container w-[95%] m-auto">
+            <Slider {...settings}>
+              {data?.results?.map((movie: IMovie) => (
+                <MoviesPage key={movie.id} product={movie} />
+              ))}
+            </Slider>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
