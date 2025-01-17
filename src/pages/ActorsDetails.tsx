@@ -1,7 +1,11 @@
 import { Image } from "@chakra-ui/react";
 import useAuthenticatedQuey from "../hooks/useAuthenticatedQuery";
 import { useParams } from "react-router-dom";
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ActorsMovieSlider from "../components/components/ActorsMovies";
+import { IMovie } from "../interface";
 const ActorsDetails = () => {
   const { id } = useParams();
 
@@ -9,8 +13,46 @@ const ActorsDetails = () => {
     queryKey: ["actorsDetails", `${id}`],
     url: `/person/${id}`,
   });
-  console.log(data);
+  const { data: actorsMovies } = useAuthenticatedQuey({
+    queryKey: ["actorsMovies", `${id}`],
+    url: `/person/${id}/movie_credits`,
+  });
   if (isLoading) return <h2>Loading...</h2>;
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    pauseOnHover: true,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+        },
+      },
+
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
   return (
     <>
       <div className="div_media">
@@ -32,6 +74,15 @@ const ActorsDetails = () => {
               <h2>{data?.popularity}</h2>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="space-y-4 bg-black mt-10 pt-10 pb-52">
+        <div className="slider-container w-[95%] m-auto">
+          <Slider {...settings}>
+            {actorsMovies?.cast.map((cast: IMovie) => (
+              <ActorsMovieSlider key={cast.id} product={cast} />
+            ))}
+          </Slider>
         </div>
       </div>
     </>

@@ -1,14 +1,14 @@
 import { Image } from "@chakra-ui/react";
-import { IMovie } from "../../interface";
+import {  ITv } from "../../interface";
 import { Link } from "react-router-dom";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 interface IProps {
-  product: IMovie;
+  product: ITv;
 }
 
-const MovieSlider = ({ product }: IProps) => {
-  const { id, release_date, title, vote_average, poster_path } = product;
+const TvSlider = ({ product }: IProps) => {
+  const { id, first_air_date, name, vote_average, poster_path } = product;
 
   return (
     <>
@@ -17,19 +17,19 @@ const MovieSlider = ({ product }: IProps) => {
       </Helmet>
       <div className="px-3 py-4">
         <div className="">
-          <Link to={`/movie/${id}`}>
+          <Link to={`/tv/${id}`}>
             <Image
               width={200}
               height={250}
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-              alt={title}
+              alt={name}
               className="w-full m-auto rounded-lg hover:scale-105 hover:rotate-6 transition-transform duration-300"
             />
           </Link>
         </div>
         <div>
           <h3 className="text-white text-center mt-2 ">
-            {title.length > 15 ? `${title.slice(0, 15)}...` : title}
+            {name.length > 15 ? `${name.slice(0, 15)}...` : name}
           </h3>
         </div>
 
@@ -38,11 +38,11 @@ const MovieSlider = ({ product }: IProps) => {
             <span className="text-yellow-500 text-xl">★</span>
             {vote_average.toFixed(1)}
           </h2>
-          <h2>{release_date}</h2>
+          <h2>{first_air_date}</h2>
         </div>
       </div>
     </>
   );
 };
 
-export default MovieSlider;
+export default TvSlider;

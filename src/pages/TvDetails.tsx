@@ -6,30 +6,27 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ActorsSlider from "../components/components/ActorsSlider";
 import Slider from "react-slick";
-import { ICastData, IMovie } from "../interface";
-import MovieSlider from "../components/components/MovieSlider";
+import { ICastData, ITv } from "../interface";
+import TvSlider from "../components/components/TvSlider";
 
-const MovieDetails = () => {
+const TvDetails = () => {
   const { id } = useParams();
 
   const { data, isLoading: isMovieLoading } = useAuthenticatedQuey({
-    queryKey: ["movieDetails", `${id}`],
-    url: `/movie/${id}`,
+    queryKey: ["tvDetails", `${id}`],
+    url: `/tv/${id}`,
   });
-
-  const { data: castData } = useAuthenticatedQuey({
-    queryKey: ["movieCast", `${id}`],
-    url: `/movie/${id}/credits`,
+  const { data: tvCredits } = useAuthenticatedQuey({
+    queryKey: ["tvCredits", `${id}`],
+    url: `/tv/${id}/credits`,
   });
-
   const { data: videosData } = useAuthenticatedQuey({
-    queryKey: ["movieVideos", `${id}`],
-    url: `/movie/${id}/videos`,
+    queryKey: ["tvVideos", `${id}`],
+    url: `/tv/${id}/videos`,
   });
-
   const { data: recommendations } = useAuthenticatedQuey({
-    queryKey: ["movieRecommendations", `${id}`],
-    url: `/movie/${id}/recommendations`,
+    queryKey: ["tvRecommendations", `${id}`],
+    url: `/tv/${id}/recommendations`,
   });
 
   if (isMovieLoading) return <div>Loading...</div>;
@@ -67,6 +64,7 @@ const MovieDetails = () => {
       },
     ],
   };
+
   const video = videosData?.results;
   return (
     <>
@@ -111,7 +109,7 @@ const MovieDetails = () => {
             <h1 className="text-3xl">
               {data.original_title} {data.original_name}
               <span className="font-bold text-red-700">
-                {data.release_date.slice(0, 4)}
+                {data.last_air_date.slice(0, 4)}
               </span>
             </h1>
             <p className="text-xl">{data.overview}</p>
@@ -155,7 +153,7 @@ const MovieDetails = () => {
         <h1 className="texts ml-10 text-2xl">Movie Crew : -</h1>
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
-            {castData?.cast?.map((cast: ICastData) => (
+            {tvCredits?.cast?.map((cast: ICastData) => (
               <ActorsSlider key={cast.id} castData={cast} />
             ))}
           </Slider>
@@ -198,8 +196,8 @@ const MovieDetails = () => {
       <div className="space-y-4 bg-black pt-10 pb-52">
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
-            {recommendations?.results?.map((cast: IMovie) => (
-              <MovieSlider key={cast.id} product={cast} />
+            {recommendations?.results?.map((cast: ITv) => (
+              <TvSlider key={cast.id} product={cast} />
             ))}
           </Slider>
         </div>
@@ -207,4 +205,4 @@ const MovieDetails = () => {
     </>
   );
 };
-export default MovieDetails;
+export default TvDetails;
