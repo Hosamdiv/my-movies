@@ -99,7 +99,7 @@ const TvDetails = () => {
           hover:bg-red-600 transition duration-300 ease-in-out
           "
               onClick={() => {
-                window.open(`https://www.themoviedb.org/movie/${id}`, "_blank");
+                window.open(`https://www.themoviedb.org/tv/${id}`, "_blank");
               }}
             >
               Watch the movie at TMDB
