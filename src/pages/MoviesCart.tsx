@@ -4,7 +4,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MovieSlider from "../components/components/MovieSlider";
-import TvPage from "./TvCart";
+import { Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const MoviesPage = () => {
   // Fetch data for Movie shows
@@ -73,6 +74,11 @@ const MoviesPage = () => {
               <MovieSlider key={movie.id} product={movie} />
             ))}
           </Slider>
+          <div className="text-center border">
+            <Link to={`/movies`}>
+              <Button className="px-5 bg-white text-black">sdfsdf</Button>
+            </Link>
+          </div>
         </div>
       </div>
       <div className="father_element space-y-4 bg-black pb-20">
@@ -95,7 +101,6 @@ const MoviesPage = () => {
           </Slider>
         </div>
       </div>
-      <TvPage />
     </>
   );
 };

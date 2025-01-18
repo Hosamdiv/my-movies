@@ -8,6 +8,7 @@ import ActorsSlider from "../components/components/ActorsSlider";
 import Slider from "react-slick";
 import { ICastData, ITv } from "../interface";
 import TvSlider from "../components/components/TvSlider";
+import { Helmet } from "react-helmet";
 
 const TvDetails = () => {
   const { id } = useParams();
@@ -20,10 +21,12 @@ const TvDetails = () => {
     queryKey: ["tvCredits", `${id}`],
     url: `/tv/${id}/credits`,
   });
+
   const { data: videosData } = useAuthenticatedQuey({
     queryKey: ["tvVideos", `${id}`],
     url: `/tv/${id}/videos`,
   });
+
   const { data: recommendations } = useAuthenticatedQuey({
     queryKey: ["tvRecommendations", `${id}`],
     url: `/tv/${id}/recommendations`,
@@ -68,6 +71,9 @@ const TvDetails = () => {
   const video = videosData?.results;
   return (
     <>
+      <Helmet>
+        <title>Details Tv</title>
+      </Helmet>
       {/* header details */}
       <div
         className="relative bg-cover bg-center max-w-full h-screen bg-fixed z-[999]"
@@ -76,7 +82,7 @@ const TvDetails = () => {
         }}
       >
         <div
-          className="absolute  top-0 left-0 w-full h-full
+          className="absolute top-0 left-0 w-full h-full
        bg-gradient-to-b from-[rgba(3,0,0,0.2)]
        via-[rgba(25,0,0,0.3)] to-black"
         ></div>
@@ -112,7 +118,14 @@ const TvDetails = () => {
                 {data.last_air_date.slice(0, 4)}
               </span>
             </h1>
-            <p className="text-xl">{data.overview}</p>
+            <p className="text-xl">
+              {data?.overview
+                ? data?.overview
+                : `Lorem ipsum dolor sit amet consectetur adipisicing
+              elit. Temporibus magni fugit quis odio quidem omnis a ratione,
+              porro quam eum, voluptates natus beatae asperiores dolorum
+              necessitatibus. Iure numquam assumenda laborum.`}
+            </p>
             <div className="display_remove">
               <div>
                 {data.genres.map((item: { id: number; name: string }) => (
@@ -150,7 +163,7 @@ const TvDetails = () => {
       </div>
       {/* slider credits movie */}
       <div className="cast_media space-y-4 bg-black pt-28 pb-10">
-        <h1 className="texts ml-10 text-2xl">Movie Crew : -</h1>
+        <h1 className="texts ml-10 text-2xl">Tv Crew : -</h1>
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
             {tvCredits?.cast?.map((cast: ICastData) => (

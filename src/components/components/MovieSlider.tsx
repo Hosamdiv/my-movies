@@ -12,9 +12,7 @@ const MovieSlider = ({ product }: IProps) => {
 
   return (
     <>
-      <Helmet>
-        <title>Home</title>
-      </Helmet>
+     
       <div className="px-3 py-4">
         <div className="">
           <Link to={`/movie/${id}`}>

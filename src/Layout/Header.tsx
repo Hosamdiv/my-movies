@@ -1,10 +1,14 @@
 import { Image, Input } from "@chakra-ui/react";
 import { Button } from "../components/ui/button";
 import { RiShareForwardFill } from "react-icons/ri";
+import { Helmet } from "react-helmet";
 
 const HeaderPage = () => {
   return (
     <>
+     <Helmet>
+        <title>Home</title>
+      </Helmet>
       <nav>
         <div
           className="div-img min-h-[80vh] flex justify-center items-center

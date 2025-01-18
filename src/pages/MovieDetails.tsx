@@ -8,6 +8,7 @@ import ActorsSlider from "../components/components/ActorsSlider";
 import Slider from "react-slick";
 import { ICastData, IMovie } from "../interface";
 import MovieSlider from "../components/components/MovieSlider";
+import { Helmet } from "react-helmet";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -70,9 +71,12 @@ const MovieDetails = () => {
   const video = videosData?.results;
   return (
     <>
+     <Helmet>
+        <title>Details movie</title>
+      </Helmet>
       {/* header details */}
       <div
-        className="relative bg-cover bg-center max-w-full h-screen bg-fixed z-[999]"
+        className="relative  bg-cover bg-center max-w-full h-screen bg-fixed z-[999]"
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/original${data.backdrop_path})`,
         }}
