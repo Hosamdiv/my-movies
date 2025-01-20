@@ -1,17 +1,17 @@
 import ReactPaginate from "react-paginate";
 import useAuthenticatedQuey from "../../hooks/useAuthenticatedQuery";
 import { useState } from "react";
-import { IMovie } from "../../interface";
+import {  ITv } from "../../interface";
 import { Button } from "../ui/button";
-import MovieSlider from "./MovieSlider";
+import TvSlider from "./TvSlider";
 
-const PaginatedMovies = () => {
+const PaginatedTv = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedCategory, setSelectedCategory] = useState("popular"); // الفئة الحالية
 
   const { data } = useAuthenticatedQuey({
     queryKey: [`${selectedCategory}`, `${currentPage}`],
-    url: `/movie/${selectedCategory}?page=${currentPage}`,
+    url: `/tv/${selectedCategory}?page=${currentPage}`,
   });
   const handlePageClick = (data: { selected: number }) => {
     setCurrentPage(data?.selected + 1);
@@ -24,7 +24,7 @@ const PaginatedMovies = () => {
   return (
     <div className="mt-10">
       <div className="flex justify-center space-x-4 mb-4">
-        {["popular", "top_rated", "upcoming"].map((category) => (
+        {["popular", "top_rated", "airing_today"].map((category) => (
           <Button
             key={category}
             onClick={() => handleCategoryChange(category)}
@@ -57,12 +57,12 @@ const PaginatedMovies = () => {
       />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 my-5">
-        {data?.results?.map((item: IMovie) => (
-          <MovieSlider key={item.id} product={item} />
+        {data?.results?.map((item:ITv) => (
+          <TvSlider key={item.id} product={item} />
         ))}
       </div>
     </div>
   );
 };
 
-export default PaginatedMovies;
+export default PaginatedTv;

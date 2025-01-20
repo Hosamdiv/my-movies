@@ -119,7 +119,7 @@ const TvDetails = () => {
               </span>
             </h1>
             <p className="text-xl">
-              {data?.overview
+              {data?.overview.length > 120
                 ? data?.overview
                 : `Lorem ipsum dolor sit amet consectetur adipisicing
               elit. Temporibus magni fugit quis odio quidem omnis a ratione,
