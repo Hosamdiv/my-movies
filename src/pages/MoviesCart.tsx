@@ -4,7 +4,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MovieSlider from "../components/components/MovieSlider";
-import { Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 const MoviesPage = () => {
@@ -67,18 +66,20 @@ const MoviesPage = () => {
   return (
     <>
       <div className="father_element space-y-4 bg-black pb-20">
-        <h1 className="ml-10 text-2xl">Popular Movies : -</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="ml-10 text-2xl">Popular Movies : -</h1>
+          <Link to={`/movies`}>
+            <button className="px-5 py-2 bg-red-700 rounded-md mr-10 text-white font-semibold">
+              All movies
+            </button>
+          </Link>
+        </div>
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
             {popularMovies?.results?.map((movie: IMovie) => (
               <MovieSlider key={movie.id} product={movie} />
             ))}
           </Slider>
-          <div className="text-center border">
-            <Link to={`/movies`}>
-              <Button className="px-5 bg-white text-black">sdfsdf</Button>
-            </Link>
-          </div>
         </div>
       </div>
       <div className="father_element space-y-4 bg-black pb-20">

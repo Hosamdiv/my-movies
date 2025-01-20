@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ITv } from "../interface";
 import TvSlider from "../components/components/TvSlider";
+import { Link } from "react-router-dom";
 
 const TvPage = () => {
   // Fetch data for TV shows
@@ -65,7 +66,14 @@ const TvPage = () => {
   return (
     <>
       <div className="father_element space-y-4 bg-black pb-20">
-        <h1 className="ml-10 text-2xl">Popular Tv : -</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="ml-10 text-2xl">Popular Tv : -</h1>
+          <Link to={`/tv`}>
+            <button className="px-5 py-2 bg-red-700 rounded-md mr-10 text-white font-semibold">
+              All Tv
+            </button>
+          </Link>
+        </div>
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
             {popularTV?.results?.map((movie: ITv) => (

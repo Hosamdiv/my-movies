@@ -1,7 +1,6 @@
 import { Image } from "@chakra-ui/react";
 import { IMovie } from "../../interface";
 import { Link } from "react-router-dom";
-import {Helmet} from "react-helmet";
 
 interface IProps {
   product: IMovie;
@@ -21,7 +20,7 @@ const MovieSlider = ({ product }: IProps) => {
               height={250}
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}
               alt={title}
-              className="w-full m-auto rounded-lg hover:scale-105 hover:rotate-6 transition-transform duration-300"
+              className="w-full m-auto rounded-lg hover:scale-110 transition-transform duration-300"
             />
           </Link>
         </div>
