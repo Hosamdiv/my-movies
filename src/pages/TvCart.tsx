@@ -14,7 +14,6 @@ const TvPage = () => {
       url: `/tv/popular?page=1`,
     }
   );
-  console.log(popularTV);
 
   const { data: topRatedTV } = useAuthenticatedQuey({
     queryKey: ["topRatedTV"],

@@ -17,7 +17,7 @@ const ActorsSlider = ({ castData }: IProps) => {
             height={250}
             src={`https://image.tmdb.org/t/p/w500${castData.profile_path}`}
             alt={castData.name}
-            className="w-full m-auto rounded-lg hover:scale-105 hover:rotate-6 transition-transform duration-300"
+            className="w-full m-auto rounded-lg hover:scale-110 transition-transform duration-300"
           />
         </Link>
       </div>

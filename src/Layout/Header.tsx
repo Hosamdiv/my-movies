@@ -2,11 +2,12 @@ import { Image, Input } from "@chakra-ui/react";
 import { Button } from "../components/ui/button";
 import { RiShareForwardFill } from "react-icons/ri";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 
 const HeaderPage = () => {
   return (
     <>
-     <Helmet>
+      <Helmet>
         <title>Home</title>
       </Helmet>
       <nav>
@@ -17,9 +18,11 @@ const HeaderPage = () => {
         >
           <div className="absolute top-0 left-10 z-0 flex items-center justify-between w-[90%]">
             <Image src="/pngwing.com.png" w={140} alt="my-netflix" />
-            <Button  className="button-media px-5 bg-[#e50914] text-white font-semibold">
-              Sign in
-            </Button>
+            <Link to={`/login`}>
+              <Button className="button-media px-5 bg-[#e50914] text-white font-semibold">
+                Sign in
+              </Button>
+            </Link>
           </div>
           <div className="div-media relative text-center max-w-[480px] space-y-3">
             <h1 className="text-4xl font-bold ">

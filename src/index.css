@@ -94,6 +94,17 @@
       rgba(33, 13, 22, 1) 84%);
 }
 
+.image_login {
+  content: "";
+  background-image: linear-gradient(to bottom, #000000b7, #000000b0),
+    url("https://assets.nflxext.com/ffe/siteui/vlv3/aa9edac4-a0e6-4f12-896e-32c518daec62/web/EG-en-20241223-TRIFECTA-perspective_9c3e440c-be48-48d0-a203-321a7ec076dd_medium.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  inset: 0;
+}
+
 @media (max-width: 600px) {
   .div-media h1 {
     font-size: 30px;
@@ -160,15 +171,18 @@
   .videos-media {
     flex-direction: column;
   }
-  .div_media{
+
+  .div_media {
     text-align: center;
   }
-  .actor_media{
+
+  .actor_media {
     align-items: center;
     justify-content: center;
     flex-direction: column;
   }
-  .description_media{
+
+  .description_media {
     width: 100%;
     margin-top: 10px;
   }

@@ -1,5 +1,5 @@
 import { Image } from "@chakra-ui/react";
-import {  ITv } from "../../interface";
+import { ITv } from "../../interface";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
@@ -23,7 +23,7 @@ const TvSlider = ({ product }: IProps) => {
               height={250}
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}
               alt={name}
-              className="w-full m-auto rounded-lg hover:scale-105 hover:rotate-6 transition-transform duration-300"
+              className="w-full m-auto rounded-lg hover:scale-110 transition-transform duration-300"
             />
           </Link>
         </div>
