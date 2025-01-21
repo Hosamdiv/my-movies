@@ -10,7 +10,7 @@ const LoginPage = () => {
       <Flex minH="100vh" align="center" justify="center">
         <Stack mx="auto" maxW="lg" py={12} px={1}>
           <Stack align="center">
-            <Heading fontSize="4xl" my="30px">
+            <Heading fontSize="3xl" sm={{ fontSize: "4xl" }} my="30px">
               Sign in to your account
             </Heading>
           </Stack>
