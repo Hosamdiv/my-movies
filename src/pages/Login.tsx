@@ -5,30 +5,39 @@ import { Checkbox } from "../components/ui/checkbox";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
-
+import { useQueryClient } from "react-query";
+import axios from "axios";
+interface IUser {
+  identifier: string;
+  password: string;
+}
 const LoginPage = () => {
-  const [user, setUser] = useState({
-    email: "",
+  const [user, setUser] = useState<IUser>({
+    identifier: "",
     password: "",
   });
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
+
+  const apiLogin = async () => {
+    const { data } = await axios.post(
+      `http://localhost:1337/api/auth/local`,
+      user
+    );
+    return data;
   };
-  const submitHandler = (e: React.FormEvent<HTMLDivElement>) => {
+
+  const queryClient = useQueryClient();
+
+  const submitHandler = async (e: React.FormEvent<HTMLDivElement>) => {
     e.preventDefault();
 
-    if (!user.email && !user.password) {
+    if (!user.identifier && !user.password) {
       setIsEmail(true);
       setIsPassword(true);
       return;
     }
-    if (!user.email) {
+    if (!user.identifier) {
       setIsEmail(true);
       return;
     }
@@ -39,7 +48,21 @@ const LoginPage = () => {
     setIsEmail(false);
     setIsPassword(false);
 
-    console.log(user);
+    try {
+      const data = await queryClient.fetchQuery("login", apiLogin);
+      console.log("Login Successful:", data);
+      console.log(data.jwt);
+    } catch (err) {
+      console.error("Login Failed:", err);
+    }
+  };
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
   };
 
   return (
@@ -51,11 +74,10 @@ const LoginPage = () => {
         <Flex minH="100vh" align="center" justify="center">
           <Stack mx="auto" maxW="lg" py={12} px={1}>
             <Stack align="center">
-              <Heading fontSize="3xl" sm={{ fontSize: "4xl" }} my="30px">
+              <Heading fontSize="2xl" sm={{ fontSize: "4xl" }} my="30px">
                 Sign in to your account
               </Heading>
             </Stack>
-
             <Box
               as="form"
               rounded="lg"
@@ -71,16 +93,15 @@ const LoginPage = () => {
                     errorText="Email field is required"
                   >
                     <Input
-                      name="email"
+                      name="identifier"
                       id="email"
                       type="email"
-                      value={user.email}
+                      value={user.identifier}
                       onChange={changeHandler}
                       className="border px-2"
                     />
                   </Field>
                 </div>
-
                 <div id="password" className="space-y-1 py-2">
                   <Field
                     invalid={isPassword}
@@ -101,7 +122,6 @@ const LoginPage = () => {
                     />
                   </Field>
                 </div>
-
                 <Stack>
                   <Stack
                     my="10px"
@@ -114,7 +134,6 @@ const LoginPage = () => {
                   </Stack>
                   <Button
                     type="submit"
-                    //   loading={loading}
                     bg="blue.400"
                     color="white"
                     _hover={{
