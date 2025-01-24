@@ -3,21 +3,34 @@ import { PasswordInput } from "../components/ui/password-input";
 import { Field } from "../components/ui/field";
 import { Checkbox } from "../components/ui/checkbox";
 import { Button } from "../components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useQueryClient } from "react-query";
 import axios from "axios";
+import CookieService from "../hooks/CookieService";
+import { useNavigate } from "react-router-dom";
+import { Toaster, toaster } from "../components/ui/toaster";
 interface IUser {
   identifier: string;
   password: string;
 }
-const LoginPage = () => {
+interface RootLayoutProps {
+  isAuthenticated: boolean;
+}
+const LoginPage = ({ isAuthenticated }: RootLayoutProps) => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<IUser>({
     identifier: "",
     password: "",
   });
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(-1);
+    }
+  }, [isAuthenticated]);
 
   const apiLogin = async () => {
     const { data } = await axios.post(
@@ -50,8 +63,19 @@ const LoginPage = () => {
 
     try {
       const data = await queryClient.fetchQuery("login", apiLogin);
-      console.log("Login Successful:", data);
-      console.log(data.jwt);
+      const date = new Date();
+      const IN_DAYS = 3;
+      const EXPIRES_IN_DAYS = 1000 * 60 * 60 * 24 * IN_DAYS;
+      date.setTime(date.getTime() + EXPIRES_IN_DAYS);
+      const options = { path: "/", expires: date };
+      CookieService.set("jwt", data.jwt, options);
+      toaster.create({
+        title: "Logged in successfully",
+        type: "success",
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (err) {
       console.error("Login Failed:", err);
     }
@@ -96,6 +120,7 @@ const LoginPage = () => {
                       name="identifier"
                       id="email"
                       type="email"
+                      placeholder="Email address"
                       value={user.identifier}
                       onChange={changeHandler}
                       className="border px-2"
@@ -112,6 +137,7 @@ const LoginPage = () => {
                       name="password"
                       id="password"
                       type="password"
+                      placeholder="Password"
                       value={user.password}
                       onChange={changeHandler}
                       _focus={{
@@ -126,10 +152,13 @@ const LoginPage = () => {
                   <Stack
                     my="10px"
                     direction={{ base: "column", sm: "row" }}
-                    align="start"
+                    align="center"
                     justify="space-between"
                   >
-                    <Checkbox>Remember me</Checkbox>
+                    <Checkbox>
+                      <Text>Remember me</Text>
+                    </Checkbox>
+
                     <Text color="blue.400">Forgot password?</Text>
                   </Stack>
                   <Button
@@ -147,6 +176,7 @@ const LoginPage = () => {
             </Box>
           </Stack>
         </Flex>
+        <Toaster />
       </div>
     </>
   );

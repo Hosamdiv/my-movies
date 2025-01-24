@@ -12,6 +12,10 @@ import TvPage from "../pages/TvCart";
 import TvAll from "../components/components/TvAll";
 import MoviesAll from "../components/components/MoviesAll";
 import LoginPage from "../pages/Login";
+import CookieService from "../hooks/CookieService";
+const token = CookieService.get("jwt");
+const isAuthenticated = !!token;
+console.log(token);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,7 +37,10 @@ const router = createBrowserRouter(
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/tv/:id" element={<TvDetails />} />
         <Route path="/actor/:id" element={<ActorsDetails />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/login"
+          element={<LoginPage isAuthenticated={isAuthenticated} />}
+        />
       </Route>
     </>
   )

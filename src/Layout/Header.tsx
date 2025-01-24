@@ -38,7 +38,9 @@ const HeaderPage = () => {
           </div>
           <div className="div_inp_but flex justify-center items-center space-x-2 my-5 w-full ">
             <Input
-              className="inp py-6 px-3 w-[50%] min-h-[16px] min-w-[16px] bg-blur-md border-2 border-[#e50914]
+              className="inp outline-none py-6 px-3 w-[50%]
+               min-h-[16px] min-w-[16px] bg-blur-md border-2
+                border-[#e50914]
             text-[18px]
             "
               type="text"
