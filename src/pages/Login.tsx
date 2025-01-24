@@ -1,4 +1,12 @@
-import { Box, Flex, Heading, Input, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Input,
+  Spinner,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { PasswordInput } from "../components/ui/password-input";
 import { Field } from "../components/ui/field";
 import { Checkbox } from "../components/ui/checkbox";
@@ -78,6 +86,10 @@ const LoginPage = ({ isAuthenticated }: RootLayoutProps) => {
       }, 1500);
     } catch (err) {
       console.error("Login Failed:", err);
+      toaster.create({
+        title: "Request failed with status code 400",
+        type: "error",
+      });
     }
   };
 
