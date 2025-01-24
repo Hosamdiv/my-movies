@@ -3,7 +3,6 @@ import {
   Flex,
   Heading,
   Input,
-  Spinner,
   Stack,
   Text,
 } from "@chakra-ui/react";
