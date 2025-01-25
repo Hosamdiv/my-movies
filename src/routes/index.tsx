@@ -13,6 +13,7 @@ import TvAll from "../components/components/TvAll";
 import MoviesAll from "../components/components/MoviesAll";
 import LoginPage from "../pages/Login";
 import CookieService from "../hooks/CookieService";
+import RegisterPage from "../pages/Register";
 const token = CookieService.get("jwt");
 const isAuthenticated = !!token;
 console.log(token);
@@ -40,6 +41,10 @@ const router = createBrowserRouter(
         <Route
           path="/login"
           element={<LoginPage isAuthenticated={isAuthenticated} />}
+        />
+        <Route
+          path="/register"
+          element={<RegisterPage isAuthenticated={isAuthenticated} />}
         />
       </Route>
     </>

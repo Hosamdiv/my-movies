@@ -3,8 +3,20 @@ import { Button } from "../components/ui/button";
 import { RiShareForwardFill } from "react-icons/ri";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import CookieService from "../hooks/CookieService";
+import { Toaster, toaster } from "../components/ui/toaster";
 
 const HeaderPage = () => {
+  const token = CookieService.get("jwt");
+  console.log(token);
+  const hello = () => {
+    toaster.create({
+      title: "Welcome to my site",
+      description:
+        "We're so glad to have you here. Enjoy exploring our site! 😊",
+      type: "success",
+    });
+  };
   return (
     <>
       <Helmet>
@@ -18,11 +30,20 @@ const HeaderPage = () => {
         >
           <div className="absolute top-0 left-10 z-0 flex items-center justify-between w-[90%]">
             <Image src="/pngwing.com.png" w={140} alt="my-netflix" />
-            <Link to={`/login`}>
-              <Button className="button-media px-5 bg-[#e50914] text-white font-semibold">
-                Sign in
+            {token ? (
+              <Button
+                onClick={hello}
+                className="button-media px-5 bg-[#e50914] text-white font-semibold"
+              >
+                Click here
               </Button>
-            </Link>
+            ) : (
+              <Link to={`/login`}>
+                <Button className="button-media px-5 bg-[#e50914] text-white font-semibold">
+                  Sign in
+                </Button>
+              </Link>
+            )}
           </div>
           <div className="div-media relative text-center max-w-[480px] space-y-3">
             <h1 className="text-4xl font-bold ">
@@ -58,6 +79,7 @@ const HeaderPage = () => {
       <div className="parent w-full">
         <div className="div-before"></div>
       </div>
+      <Toaster />
     </>
   );
 };

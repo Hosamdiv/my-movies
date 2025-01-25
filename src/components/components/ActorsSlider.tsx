@@ -6,8 +6,6 @@ interface IProps {
   castData: ICastData;
 }
 const ActorsSlider = ({ castData }: IProps) => {
-  // console.log(castData);
-
   return (
     <div className="px-3 py-4">
       <div className="">
@@ -25,7 +23,6 @@ const ActorsSlider = ({ castData }: IProps) => {
         <h3 className="text-white text-center mt-2 ">{castData.name}</h3>
       </div>
     </div>
-    
   );
 };
 

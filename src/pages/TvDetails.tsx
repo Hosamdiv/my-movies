@@ -166,9 +166,10 @@ const TvDetails = () => {
         <h1 className="texts ml-10 text-2xl">Tv Crew : -</h1>
         <div className="slider-container w-[95%] m-auto">
           <Slider {...settings}>
-            {tvCredits?.cast?.map((cast: ICastData) => (
-              <ActorsSlider key={cast.id} castData={cast} />
-            ))}
+            {tvCredits?.cast.length >= 5 &&
+              tvCredits?.cast?.map((cast: ICastData) => (
+                <ActorsSlider key={cast.id} castData={cast} />
+              ))}
           </Slider>
         </div>
       </div>
