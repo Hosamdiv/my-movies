@@ -46,7 +46,7 @@ const HeaderPage = () => {
             )}
           </div>
           <div className="div-media relative text-center max-w-[480px] space-y-3">
-            <h1 className="text-4xl font-bold ">
+            <h1 className="text-2gxl sm:text-4xl font-bold ">
               Unlimited movies, TV shows, and more
             </h1>
             <h2 className="text-xl font-bold">
