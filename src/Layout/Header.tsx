@@ -5,17 +5,25 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import CookieService from "../hooks/CookieService";
 import { Toaster, toaster } from "../components/ui/toaster";
+import {
+  MenuContent,
+  MenuItem,
+  MenuRoot,
+  MenuTrigger,
+} from "../components/ui/menu";
 
 const HeaderPage = () => {
   const token = CookieService.get("jwt");
   console.log(token);
-  const hello = () => {
+  const logout = () => {
     toaster.create({
-      title: "Welcome to my site",
-      description:
-        "We're so glad to have you here. Enjoy exploring our site! 😊",
-      type: "success",
+      title: "Logged out successfully. 😊",
+      type: "info",
     });
+    CookieService.remove("jwt");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
   return (
     <>
@@ -31,12 +39,22 @@ const HeaderPage = () => {
           <div className="absolute top-0 left-10 z-0 flex items-center justify-between w-[90%]">
             <Image src="/pngwing.com.png" w={140} alt="my-netflix" />
             {token ? (
-              <Button
-                onClick={hello}
-                className="button-media px-5 bg-[#e50914] text-white font-semibold"
-              >
-                Click here
-              </Button>
+              <MenuRoot>
+                <MenuTrigger asChild>
+                  <Button
+                    className="button-media px-5 bg-[#e50914] text-white font-semibold"
+                    variant="outline"
+                    size="sm"
+                  >
+                    Log Out
+                  </Button>
+                </MenuTrigger>
+                <MenuContent>
+                  <MenuItem className="" onClick={logout} value="new-txt">
+                    Are you sure? 😊
+                  </MenuItem>
+                </MenuContent>
+              </MenuRoot>
             ) : (
               <Link to={`/login`}>
                 <Button className="button-media px-5 bg-[#e50914] text-white font-semibold">
