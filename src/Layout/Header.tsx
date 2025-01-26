@@ -17,7 +17,7 @@ const HeaderPage = () => {
   console.log(token);
   const logout = () => {
     toaster.create({
-      title: "Logged out successfully. 😊",
+      title: "Logged out successfully. 😔",
       type: "info",
     });
     CookieService.remove("jwt");
@@ -49,8 +49,8 @@ const HeaderPage = () => {
                     Log Out
                   </Button>
                 </MenuTrigger>
-                <MenuContent>
-                  <MenuItem className="" onClick={logout} value="new-txt">
+                <MenuContent className="border border-red-700 ml-4">
+                  <MenuItem className="bg-red-700 rounded" onClick={logout} value="new-txt">
                     Are you sure? 😊
                   </MenuItem>
                 </MenuContent>
