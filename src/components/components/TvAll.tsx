@@ -1,18 +1,33 @@
 import ReactPaginate from "react-paginate";
 import useAuthenticatedQuey from "../../hooks/useAuthenticatedQuery";
-import { useState } from "react";
-import {  ITv } from "../../interface";
+import { useEffect, useState } from "react";
+import { ITv } from "../../interface";
 import { Button } from "../ui/button";
 import TvSlider from "./TvSlider";
+import { Input } from "@chakra-ui/react";
 
 const PaginatedTv = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [selectedCategory, setSelectedCategory] = useState("popular"); // الفئة الحالية
+  const [selectedCategory, setSelectedCategory] = useState("popular");
+  const [query, setQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   const { data } = useAuthenticatedQuey({
-    queryKey: [`${selectedCategory}`, `${currentPage}`],
-    url: `/tv/${selectedCategory}?page=${currentPage}`,
+    queryKey: isSearching
+      ? [`search`, query, `${currentPage}`]
+      : [selectedCategory, `${currentPage}`],
+    url: isSearching
+      ? `/search/tv?query=${query}&page=${currentPage}`
+      : `/tv/${selectedCategory}?page=${currentPage}`,
   });
+  useEffect(() => {
+    if (query.trim()) {
+      setIsSearching(true);
+      setCurrentPage(1);
+    } else {
+      setIsSearching(false);
+    }
+  }, [query]);
   const handlePageClick = (data: { selected: number }) => {
     setCurrentPage(data?.selected + 1);
   };
@@ -23,6 +38,16 @@ const PaginatedTv = () => {
   };
   return (
     <div className="mt-10">
+      <div className="w-[50%] m-auto mb-5">
+        <Input
+          type="text"
+          placeholder="Search for a movie..."
+          aria-label="Search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="border p-2 rounded "
+        />
+      </div>
       <div className="flex justify-center space-x-4 mb-4">
         {["popular", "top_rated", "airing_today"].map((category) => (
           <Button
@@ -57,7 +82,7 @@ const PaginatedTv = () => {
       />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 my-5">
-        {data?.results?.map((item:ITv) => (
+        {data?.results?.map((item: ITv) => (
           <TvSlider key={item.id} product={item} />
         ))}
       </div>
