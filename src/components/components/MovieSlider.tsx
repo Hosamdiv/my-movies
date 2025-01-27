@@ -26,14 +26,14 @@ const MovieSlider = ({ product }: IProps) => {
         </div>
         <div>
           <h3 className="text-white text-center mt-2 ">
-            {title.length > 15 ? `${title.slice(0, 15)}...` : title}
+            {title?.length > 15 ? `${title.slice(0, 15)}...` : title}
           </h3>
         </div>
 
         <div className="flex items-center justify-around">
           <h2 className="flex items-center gap-1">
             <span className="text-yellow-500 text-xl">★</span>
-            {vote_average.toFixed(1)}
+            {vote_average?.toFixed(1)}
           </h2>
           <h2>{release_date}</h2>
         </div>

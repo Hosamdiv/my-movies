@@ -29,7 +29,7 @@ const TvSlider = ({ product }: IProps) => {
         </div>
         <div>
           <h3 className="text-white text-center mt-2 ">
-            {name.length > 15 ? `${name.slice(0, 15)}...` : name}
+            {name?.length > 15 ? `${name.slice(0, 15)}...` : name}
           </h3>
         </div>
 
