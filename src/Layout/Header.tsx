@@ -50,7 +50,11 @@ const HeaderPage = () => {
                   </Button>
                 </MenuTrigger>
                 <MenuContent className="border border-red-700 ml-4">
-                  <MenuItem className="bg-red-700 rounded" onClick={logout} value="new-txt">
+                  <MenuItem
+                    className="bg-red-700 rounded"
+                    onClick={logout}
+                    value="new-txt"
+                  >
                     Are you sure? 😊
                   </MenuItem>
                 </MenuContent>
@@ -103,3 +107,4 @@ const HeaderPage = () => {
 };
 
 export default HeaderPage;
+

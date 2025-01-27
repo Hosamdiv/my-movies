@@ -1,18 +1,33 @@
 import ReactPaginate from "react-paginate";
 import useAuthenticatedQuey from "../../hooks/useAuthenticatedQuery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IMovie } from "../../interface";
 import { Button } from "../ui/button";
 import MovieSlider from "./MovieSlider";
+import { Input } from "@chakra-ui/react";
 
 const PaginatedMovies = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedCategory, setSelectedCategory] = useState("popular"); // الفئة الحالية
+  const [query, setQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   const { data } = useAuthenticatedQuey({
-    queryKey: [`${selectedCategory}`, `${currentPage}`],
-    url: `/movie/${selectedCategory}?page=${currentPage}`,
+    queryKey: isSearching
+      ? [`search`, query, `${currentPage}`]
+      : [selectedCategory, `${currentPage}`],
+    url: isSearching
+      ? `/search/movie?query=${query}&page=${currentPage}`
+      : `/movie/${selectedCategory}?page=${currentPage}`,
   });
+  useEffect(() => {
+    if (query.trim()) {
+      setIsSearching(true);
+      setCurrentPage(1);
+    } else {
+      setIsSearching(false);
+    }
+  }, [query]);
   const handlePageClick = (data: { selected: number }) => {
     setCurrentPage(data?.selected + 1);
   };
@@ -23,6 +38,16 @@ const PaginatedMovies = () => {
   };
   return (
     <div className="mt-10">
+      <div className="w-[50%] m-auto mb-5">
+        <Input
+          type="text"
+          placeholder="Search for a movie..."
+          aria-label="Search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="border p-2 rounded "
+        />
+      </div>
       <div className="flex justify-center space-x-4 mb-4">
         {["popular", "top_rated", "upcoming"].map((category) => (
           <Button
